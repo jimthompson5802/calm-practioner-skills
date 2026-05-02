@@ -20,33 +20,29 @@ When the `calm-architecture-discovery` skill is used, the CALM AI Assistant disp
 - calm-architectures/
   | File Name | Description |
   | --- | --- |
-  | `claude-discovered-calm-architecture.json` | CALM model produced by Claude |
-  | `claude-discovered-calm-architecture.md` | CALM docify architecture document for the architecture discovered by Claude |
-  | `claude-discovered-key-observations.md` | Human-readable observations from Claude |
-  | `codex-5.5-high-discovered-calm-architecture.json` | CALM model from Codex (5.5 high) |
-  | `codex-5.5-high-discovered-calm-architecture.md` | CALM docify architecture document for the architecture discovered by Codex (5.5 high) |
-  | `codex-5.5-high-discovered-key-observations.md` | Observations from Codex (5.5 high) |
-  | `codex-discovered-calm-architecture.json` | CALM model from Codex |
-  | `codex-discovered-calm-architecture.md` | CALM docify architecture document for the architecture discovered by Codex |
-  | `codex-discovered-key-observations.md` | Observations from Codex |
-  | `copilot-discovered-calm-architecture.json` | CALM model from Copilot |
-  | `copilot-discovered-calm-architecture.md` | CALM docify architecture document for the architecture discovered by Copilot |
-  | `copilot-discovered-key-observations.md` | Observations from Copilot |
+  | [claude-discovered-calm-architecture.json](calm-architectures/claude-discovered-calm-architecture.json) | CALM model produced by Claude |
+  | [claude-discovered-calm-architecture.md](calm-architectures/claude-discovered-calm-architecture.md) | CALM docify architecture document for the architecture discovered by Claude |
+  | [claude-discovered-key-observations.md](calm-architectures/claude-discovered-key-observations.md) | Human-readable observations from Claude |
+  | [codex-5.5-high-discovered-calm-architecture.json](calm-architectures/codex-5.5-high-discovered-calm-architecture.json) | CALM model from Codex (5.5 high) |
+  | [codex-5.5-high-discovered-calm-architecture.md](calm-architectures/codex-5.5-high-discovered-calm-architecture.md) | CALM docify architecture document for the architecture discovered by Codex (5.5 high) |
+  | [codex-5.5-high-discovered-key-observations.md](calm-architectures/codex-5.5-high-discovered-key-observations.md) | Observations from Codex (5.5 high) |
+  | [codex-discovered-calm-architecture.json](calm-architectures/codex-discovered-calm-architecture.json) | CALM model from Codex |
+  | [codex-discovered-calm-architecture.md](calm-architectures/codex-discovered-calm-architecture.md) | CALM docify architecture document for the architecture discovered by Codex |
+  | [codex-discovered-key-observations.md](calm-architectures/codex-discovered-key-observations.md) | Observations from Codex |
+  | [copilot-discovered-calm-architecture.json](calm-architectures/copilot-discovered-calm-architecture.json) | CALM model from Copilot |
+  | [copilot-discovered-calm-architecture.md](calm-architectures/copilot-discovered-calm-architecture.md) | CALM docify architecture document for the architecture discovered by Copilot |
+  | [copilot-discovered-key-observations.md](calm-architectures/copilot-discovered-key-observations.md) | Observations from Copilot |
 
 - templates/
   - solution-architecture-document.md — Template for turning discovered CALM models into a solution document
 
 ## Getting started — proof of concept workflow
 
-1. Enable the `calm` skill to prepare the agent for architecture discovery.
-2. Run the `calm-architecture-discovery` skill or workflow with the description as input.
-3. Save the resulting CALM JSON and key-observations files into `calm-architectures/` for each assistant variant you evaluate.
+1. Enable CALM AI Assistant `calm init-ai` and manually added the `calm-architecture-discovery` skill to the correct location for the particular AI Assistant.
+2. Enable the `calm` skill to prepare the agent for architecture discovery.
+3. Run the `calm-architecture-discovery` skill to discover the architecture implied by the code.
+4. Save the resulting CALM JSON and key-observations files into `calm-architectures/` for each assistant variant you evaluate.
 
-
-## Files of interest
-
-- `calm-architectures/` — recorded assistant outputs (JSON + observations).
-- `templates/solution-architecture-document.md` — template for turning a CALM model into a solution document.
 
 ## Architecture comparison
 
@@ -57,7 +53,7 @@ The four CALM architectures in `calm-architectures/` are not semantically identi
 - All four models identify the CALM toolchain or monorepo as being centered on the same primary capabilities: a developer-facing experience, CALM Hub or its API, a browser UI, CLI-based authoring and validation, a standalone validation server, persistent storage, and optional Keycloak-backed authentication.
 - All four models also recognize AI-assisted interaction as part of the ecosystem, either through a dedicated AI assistant actor, MCP endpoints, CalmStudio MCP, CALMGuard agents, or AI prompt assets.
 
-Validation results
+### Validation results
 
 - `claude-discovered-calm-architecture.json` passes `calm validate -a` with no errors and no warnings.
 - `codex-5.5-high-discovered-calm-architecture.json` passes `calm validate -a` with no errors and no warnings.
