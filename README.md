@@ -17,17 +17,18 @@ When the `calm-architecture-discovery` skill is used, the CALM AI Assistant disp
 
 ## Repository structure
 
-- README.md
-  - Proof-of-concept overview, discovery workflow, important warning behavior, and architecture comparison notes
-
 - calm-architectures/
   - claude-discovered-calm-architecture.json — CALM model produced by Claude
+  - claude-discovered-calm-architecture.md — CALM docify architecture document for the architecture discovered by Claude
   - claude-discovered-key-observations.md — Human-readable observations from Claude
   - codex-5.5-high-discovered-calm-architecture.json — CALM model from Codex (5.5 high)
+  - codex-5.5-high-discovered-calm-architecture.md — CALM docify architecture document for the architecture discovered by Codex (5.5 high)
   - codex-5.5-high-discovered-key-observations.md — Observations from Codex (5.5 high)
   - codex-discovered-calm-architecture.json — CALM model from Codex
+  - codex-discovered-calm-architecture.md —CALM docify architecture document for the architecture discovered by Codex
   - codex-discovered-key-observations.md — Observations from Codex
   - copilot-discovered-calm-architecture.json — CALM model from Copilot
+  - copilot-discovered-calm-architecture.md — CALM docify architecture document for the architecture discovered by Copilot
   - copilot-discovered-key-observations.md — Observations from Copilot
 
 - templates/
