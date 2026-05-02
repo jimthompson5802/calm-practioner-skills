@@ -1,0 +1,459 @@
+{
+  "$schema": "https://calm.finos.org/release/1.2/meta/calm.json",
+  "unique-id": "code-discovered-calm-architecture",
+  "name": "Code Discovered CALM Architecture",
+  "description": "Initial CALM architecture scaffold populated from static code discovery output.",
+  "nodes": [
+    {
+      "unique-id": "repo-users",
+      "node-type": "actor",
+      "name": "Repo Users",
+      "description": "Developers, architects, and operators using the monorepo tools and user interfaces."
+    },
+    {
+      "unique-id": "calm-hub-platform",
+      "node-type": "system",
+      "name": "CALM Hub Platform",
+      "description": "Hub-related subsystem combining web UI, backend API, MCP endpoint, storage, and optional authentication."
+    },
+    {
+      "unique-id": "calm-hub-ui",
+      "node-type": "webclient",
+      "name": "CALM Hub UI",
+      "description": "React and Vite browser UI for browsing and visualizing CALM resources."
+    },
+    {
+      "unique-id": "calm-hub-api",
+      "node-type": "service",
+      "name": "CALM Hub API",
+      "description": "Quarkus backend serving /calm APIs and Swagger UI."
+    },
+    {
+      "unique-id": "calm-hub-mcp",
+      "node-type": "service",
+      "name": "CALM Hub MCP Server",
+      "description": "Embedded MCP endpoint exposed by CALM Hub at /mcp."
+    },
+    {
+      "unique-id": "calm-hub-mongo",
+      "node-type": "database",
+      "name": "MongoDB Store",
+      "description": "Default persistence for CALM Hub in non-standalone mode."
+    },
+    {
+      "unique-id": "calm-hub-nitrite",
+      "node-type": "database",
+      "name": "NitriteDB Store",
+      "description": "Embedded standalone persistence option for CALM Hub."
+    },
+    {
+      "unique-id": "keycloak-idp",
+      "node-type": "ecosystem",
+      "name": "Keycloak",
+      "description": "Optional OIDC identity provider for the secure CALM Hub profile."
+    },
+    {
+      "unique-id": "calm-tooling",
+      "node-type": "system",
+      "name": "CALM Tooling",
+      "description": "Local and IDE-oriented toolchain around CALM authoring and validation."
+    },
+    {
+      "unique-id": "calm-cli",
+      "node-type": "service",
+      "name": "CALM CLI",
+      "description": "Node-based CLI for generate, validate, template, docify, and AI bootstrap commands."
+    },
+    {
+      "unique-id": "calm-server",
+      "node-type": "service",
+      "name": "CALM Validation Server",
+      "description": "Standalone HTTP validation service exposing /health and /calm/validate."
+    },
+    {
+      "unique-id": "calm-vscode",
+      "node-type": "service",
+      "name": "CALM VS Code Extension",
+      "description": "IDE extension for live preview, validation, navigation, and documentation workflows."
+    },
+    {
+      "unique-id": "calm-ai-prompts",
+      "node-type": "data-asset",
+      "name": "CALM AI Prompt Pack",
+      "description": "Prompt templates and assistant configs consumed by calm init-ai and AI-assisted workflows."
+    },
+    {
+      "unique-id": "calm-suite",
+      "node-type": "system",
+      "name": "CALM Suite",
+      "description": "Product area containing CalmStudio and CALMGuard."
+    },
+    {
+      "unique-id": "calmstudio-ui",
+      "node-type": "webclient",
+      "name": "CalmStudio",
+      "description": "Svelte-based visual editor that produces CALM JSON."
+    },
+    {
+      "unique-id": "calmstudio-mcp",
+      "node-type": "service",
+      "name": "CalmStudio MCP",
+      "description": "MCP server for architecture CRUD, validation, render, and import or export."
+    },
+    {
+      "unique-id": "calmguard-app",
+      "node-type": "service",
+      "name": "CALMGuard",
+      "description": "Next.js compliance analysis app with SSE streaming and multi-agent orchestration."
+    },
+    {
+      "unique-id": "llm-providers",
+      "node-type": "ecosystem",
+      "name": "External LLM Providers",
+      "description": "Gemini, Claude, GPT, and Grok providers used by CALMGuard."
+    },
+    {
+      "unique-id": "github-ecosystem",
+      "node-type": "ecosystem",
+      "name": "GitHub",
+      "description": "Remote repository and pull request platform referenced by CALMGuard and CI workflows."
+    }
+  ],
+  "relationships": [
+    {
+      "unique-id": "rel-001",
+      "description": "Users explore and manage CALM models through the Hub browser UI.",
+      "relationship-type": {
+        "interacts": {
+          "actor": "repo-users",
+          "nodes": [
+            "calm-hub-ui"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "rel-002",
+      "description": "Hub UI calls the Hub backend /calm endpoints.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-hub-ui"
+          },
+          "destination": {
+            "node": "calm-hub-api"
+          }
+        }
+      },
+      "protocol": "HTTP"
+    },
+    {
+      "unique-id": "rel-003",
+      "description": "MCP-capable clients can use the Hub MCP endpoint.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "repo-users"
+          },
+          "destination": {
+            "node": "calm-hub-mcp"
+          }
+        }
+      },
+      "protocol": "HTTP"
+    },
+    {
+      "unique-id": "rel-004",
+      "description": "Default Hub persistence uses MongoDB.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-hub-api"
+          },
+          "destination": {
+            "node": "calm-hub-mongo"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "rel-005",
+      "description": "Standalone Hub mode uses NitriteDB storage.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-hub-api"
+          },
+          "destination": {
+            "node": "calm-hub-nitrite"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "rel-006",
+      "description": "Hub UI can authenticate against Keycloak when OIDC is enabled.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-hub-ui"
+          },
+          "destination": {
+            "node": "keycloak-idp"
+          }
+        }
+      },
+      "protocol": "HTTPS"
+    },
+    {
+      "unique-id": "rel-007",
+      "description": "Secure Hub profile validates authenticated access through Keycloak.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-hub-api"
+          },
+          "destination": {
+            "node": "keycloak-idp"
+          }
+        }
+      },
+      "protocol": "HTTPS"
+    },
+    {
+      "unique-id": "rel-008",
+      "description": "CALM Hub Platform includes the browser UI.",
+      "relationship-type": {
+        "composed-of": {
+          "container": "calm-hub-platform",
+          "nodes": [
+            "calm-hub-ui"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "rel-009",
+      "description": "CALM Hub Platform includes the Quarkus API.",
+      "relationship-type": {
+        "composed-of": {
+          "container": "calm-hub-platform",
+          "nodes": [
+            "calm-hub-api"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "rel-010",
+      "description": "CALM Hub Platform includes the embedded MCP service.",
+      "relationship-type": {
+        "composed-of": {
+          "container": "calm-hub-platform",
+          "nodes": [
+            "calm-hub-mcp"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "rel-011",
+      "description": "Users run local CLI commands to generate, validate, and document architectures.",
+      "relationship-type": {
+        "interacts": {
+          "actor": "repo-users",
+          "nodes": [
+            "calm-cli"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "rel-012",
+      "description": "CLI can be pointed at a CalmHub URL for loading documents.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-cli"
+          },
+          "destination": {
+            "node": "calm-hub-api"
+          }
+        }
+      },
+      "protocol": "HTTP"
+    },
+    {
+      "unique-id": "rel-013",
+      "description": "Users edit CALM files in VS Code with live preview and validation.",
+      "relationship-type": {
+        "interacts": {
+          "actor": "repo-users",
+          "nodes": [
+            "calm-vscode"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "rel-014",
+      "description": "VS Code workflows consume local CALM prompt assets.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-vscode"
+          },
+          "destination": {
+            "node": "calm-ai-prompts"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "rel-015",
+      "description": "Users invoke the standalone validation API.",
+      "relationship-type": {
+        "interacts": {
+          "actor": "repo-users",
+          "nodes": [
+            "calm-server"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "rel-016",
+      "description": "Validation requests are sent to the validation endpoint.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "repo-users"
+          },
+          "destination": {
+            "node": "calm-server"
+          }
+        }
+      },
+      "protocol": "HTTP"
+    },
+    {
+      "unique-id": "rel-017",
+      "description": "Users draw architectures visually in CalmStudio.",
+      "relationship-type": {
+        "interacts": {
+          "actor": "repo-users",
+          "nodes": [
+            "calmstudio-ui"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "rel-018",
+      "description": "AI clients can drive CalmStudio through its MCP server.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "repo-users"
+          },
+          "destination": {
+            "node": "calmstudio-mcp"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "rel-019",
+      "description": "CALM Suite includes CalmStudio.",
+      "relationship-type": {
+        "composed-of": {
+          "container": "calm-suite",
+          "nodes": [
+            "calmstudio-ui"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "rel-020",
+      "description": "CALM Suite includes the CalmStudio MCP service.",
+      "relationship-type": {
+        "composed-of": {
+          "container": "calm-suite",
+          "nodes": [
+            "calmstudio-mcp"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "rel-021",
+      "description": "CALM Suite includes CALMGuard.",
+      "relationship-type": {
+        "composed-of": {
+          "container": "calm-suite",
+          "nodes": [
+            "calmguard-app"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "rel-022",
+      "description": "Users upload or fetch CALM models and review compliance dashboards.",
+      "relationship-type": {
+        "interacts": {
+          "actor": "repo-users",
+          "nodes": [
+            "calmguard-app"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "rel-023",
+      "description": "CALMGuard streams agent progress and findings back to the browser.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calmguard-app"
+          },
+          "destination": {
+            "node": "repo-users"
+          }
+        }
+      },
+      "protocol": "HTTPS"
+    },
+    {
+      "unique-id": "rel-024",
+      "description": "CALMGuard calls external LLM providers for analysis and generation.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calmguard-app"
+          },
+          "destination": {
+            "node": "llm-providers"
+          }
+        }
+      },
+      "protocol": "HTTPS"
+    },
+    {
+      "unique-id": "rel-025",
+      "description": "CALMGuard fetches CALM from GitHub and produces PR-oriented outputs.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calmguard-app"
+          },
+          "destination": {
+            "node": "github-ecosystem"
+          }
+        }
+      },
+      "protocol": "HTTPS"
+    }
+  ]
+}

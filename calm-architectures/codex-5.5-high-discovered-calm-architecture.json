@@ -1,0 +1,657 @@
+{
+  "$schema": "https://calm.finos.org/release/1.2/meta/calm.json",
+  "unique-id": "finos-calm-monorepo-discovered",
+  "name": "FINOS CALM Monorepo Discovered Architecture",
+  "description": "Minimal static-discovery architecture for the FINOS Architecture as Code monorepo, focused on the primary CALM authoring, validation, Hub, UI, and storage components.",
+  "metadata": {
+    "discovery-method": "static-analysis",
+    "created-by": "codex-5.5-high",
+    "scope": "minimal discovered architecture",
+    "source-workspace": "/Users/jim/Desktop/finos/calm-architecture-discovery-skill"
+  },
+  "nodes": [
+    {
+      "unique-id": "architecture-as-code-repo",
+      "node-type": "system",
+      "name": "Architecture as Code Monorepo",
+      "description": "FINOS CALM specification and tool monorepo."
+    },
+    {
+      "unique-id": "developer",
+      "node-type": "actor",
+      "name": "Developer or Architect",
+      "description": "Human user creating, validating, visualizing, and publishing CALM assets."
+    },
+    {
+      "unique-id": "calm-specification",
+      "node-type": "data-asset",
+      "name": "CALM Schemas and Examples",
+      "description": "JSON schemas, patterns, controls, interfaces, sample architectures, and release or draft metadata under calm."
+    },
+    {
+      "unique-id": "calm-cli",
+      "node-type": "service",
+      "name": "CALM CLI",
+      "description": "Node CLI for generate, validate, template, docify, and AI assistant initialization."
+    },
+    {
+      "unique-id": "calm-shared",
+      "node-type": "service",
+      "name": "CALM Shared Library",
+      "description": "Shared validation, document loading, Spectral rules, template, docify, and resolver logic."
+    },
+    {
+      "unique-id": "calm-models",
+      "node-type": "data-asset",
+      "name": "CALM Models Package",
+      "description": "Type definitions and model classes for CALM documents."
+    },
+    {
+      "unique-id": "calm-widgets",
+      "node-type": "service",
+      "name": "CALM Widgets",
+      "description": "Handlebars widget package for generated CALM documentation."
+    },
+    {
+      "unique-id": "calm-server",
+      "node-type": "service",
+      "name": "CALM Server",
+      "description": "Standalone Express HTTP validation server exposing health and CALM validation endpoints."
+    },
+    {
+      "unique-id": "calm-hub",
+      "node-type": "service",
+      "name": "CALM Hub API",
+      "description": "Quarkus REST API for namespaces, architectures, patterns, flows, controls, decorators, schemas, search, ADRs, and user access."
+    },
+    {
+      "unique-id": "calm-hub-mcp",
+      "node-type": "service",
+      "name": "CALM Hub MCP Endpoint",
+      "description": "Embedded Quarkiverse MCP server exposed by CALM Hub."
+    },
+    {
+      "unique-id": "calm-hub-ui",
+      "node-type": "webclient",
+      "name": "CALM Hub UI",
+      "description": "React and Vite UI for browsing, visualizing, searching, and managing CALM Hub content."
+    },
+    {
+      "unique-id": "mongodb",
+      "node-type": "database",
+      "name": "MongoDB",
+      "description": "Default persistent store for CALM Hub using the calmSchemas database."
+    },
+    {
+      "unique-id": "nitritedb",
+      "node-type": "database",
+      "name": "NitriteDB",
+      "description": "Embedded standalone CALM Hub storage mode."
+    },
+    {
+      "unique-id": "keycloak",
+      "node-type": "ecosystem",
+      "name": "Keycloak",
+      "description": "Local secure-profile OIDC provider for CALM Hub and Hub UI authentication."
+    },
+    {
+      "unique-id": "calm-vscode-plugin",
+      "node-type": "service",
+      "name": "CALM VS Code Extension",
+      "description": "VS Code extension for preview, navigation, validation, tree view, and documentation generation workflows."
+    },
+    {
+      "unique-id": "docs-site",
+      "node-type": "webclient",
+      "name": "CALM Documentation Site",
+      "description": "Docusaurus documentation site published to calm.finos.org."
+    },
+    {
+      "unique-id": "advent-site",
+      "node-type": "webclient",
+      "name": "Advent of CALM Site",
+      "description": "Astro educational content site."
+    },
+    {
+      "unique-id": "calm-ai",
+      "node-type": "data-asset",
+      "name": "CALM AI Prompts and Tooling",
+      "description": "Provider-specific prompt and configuration assets installed by calm init-ai."
+    },
+    {
+      "unique-id": "calm-guard",
+      "node-type": "system",
+      "name": "CALMGuard",
+      "description": "Next.js continuous compliance platform with dashboard, API routes, and AI agent orchestration."
+    },
+    {
+      "unique-id": "calmguard-agents",
+      "node-type": "service",
+      "name": "CALMGuard Agent Squad",
+      "description": "LLM-backed and deterministic agents for analysis, compliance mapping, risk scoring, pipelines, and remediation."
+    },
+    {
+      "unique-id": "calm-studio",
+      "node-type": "webclient",
+      "name": "CalmStudio",
+      "description": "SvelteKit visual CALM editor with canvas, code sync, import/export, and validation."
+    },
+    {
+      "unique-id": "calmstudio-mcp",
+      "node-type": "service",
+      "name": "CalmStudio MCP Server",
+      "description": "MCP server with stdio and HTTP transports for AI-driven architecture creation and editing."
+    },
+    {
+      "unique-id": "github",
+      "node-type": "ecosystem",
+      "name": "GitHub",
+      "description": "Source hosting, Actions CI, repository APIs, PR creation, and issue links."
+    },
+    {
+      "unique-id": "llm-providers",
+      "node-type": "ecosystem",
+      "name": "LLM Providers",
+      "description": "Google Gemini, Anthropic Claude, OpenAI, and xAI providers used by CALMGuard."
+    },
+    {
+      "unique-id": "aws-static-hosting",
+      "node-type": "ecosystem",
+      "name": "AWS S3 and CloudFront",
+      "description": "Static hosting and cache invalidation target for documentation workflows."
+    },
+    {
+      "unique-id": "docker-hub",
+      "node-type": "ecosystem",
+      "name": "Docker Hub",
+      "description": "Target registry for published CALM Hub container images."
+    },
+    {
+      "unique-id": "deployment-platform",
+      "node-type": "ecosystem",
+      "name": "Docker and Kubernetes Runtime",
+      "description": "Container and Kubernetes deployment boundary found in Docker Compose and Kubernetes manifests."
+    },
+    {
+      "unique-id": "local-calm-documents",
+      "node-type": "data-asset",
+      "name": "Local CALM Documents",
+      "description": "Architecture, pattern, template, timeline, ADR, and control files consumed by CALM tools."
+    }
+  ],
+  "relationships": [
+    {
+      "unique-id": "repo-composed-of-spec",
+      "description": "Contains the CALM schema and specification assets.",
+      "relationship-type": {
+        "composed-of": {
+          "container": "architecture-as-code-repo",
+          "nodes": [
+            "calm-specification"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "repo-composed-of-tooling",
+      "description": "Contains the primary CALM tools and libraries.",
+      "relationship-type": {
+        "composed-of": {
+          "container": "architecture-as-code-repo",
+          "nodes": [
+            "calm-cli",
+            "calm-shared",
+            "calm-models",
+            "calm-widgets",
+            "calm-server",
+            "calm-vscode-plugin",
+            "calm-ai"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "repo-composed-of-hub",
+      "description": "Contains the Hub backend and frontend workspaces.",
+      "relationship-type": {
+        "composed-of": {
+          "container": "architecture-as-code-repo",
+          "nodes": [
+            "calm-hub",
+            "calm-hub-ui",
+            "calm-hub-mcp"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "repo-composed-of-sites",
+      "description": "Contains public documentation and educational websites.",
+      "relationship-type": {
+        "composed-of": {
+          "container": "architecture-as-code-repo",
+          "nodes": [
+            "docs-site",
+            "advent-site"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "repo-composed-of-suite",
+      "description": "Contains additional CALM suite applications.",
+      "relationship-type": {
+        "composed-of": {
+          "container": "architecture-as-code-repo",
+          "nodes": [
+            "calm-guard",
+            "calm-studio",
+            "calmstudio-mcp"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "developer-uses-cli",
+      "description": "Runs local CALM commands for generation, validation, templating, documentation, and AI setup.",
+      "relationship-type": {
+        "interacts": {
+          "actor": "developer",
+          "nodes": [
+            "calm-cli"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "developer-uses-hub-ui",
+      "description": "Browses and manages Hub resources through the web UI.",
+      "protocol": "HTTPS",
+      "relationship-type": {
+        "interacts": {
+          "actor": "developer",
+          "nodes": [
+            "calm-hub-ui"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "developer-uses-vscode",
+      "description": "Previews, navigates, validates, and documents CALM models inside VS Code.",
+      "relationship-type": {
+        "interacts": {
+          "actor": "developer",
+          "nodes": [
+            "calm-vscode-plugin"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "cli-loads-local-docs",
+      "description": "Loads local architectures, patterns, timelines, templates, and mappings from the workspace.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-cli"
+          },
+          "destination": {
+            "node": "local-calm-documents"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "cli-loads-hub-docs",
+      "description": "Retrieves Hub documents when configured with a CALM Hub URL.",
+      "protocol": "HTTPS",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-cli"
+          },
+          "destination": {
+            "node": "calm-hub"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "cli-fetches-remote-schemas",
+      "description": "Loads allowlisted remote schema and document URLs, including calm.finos.org resources.",
+      "protocol": "HTTPS",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-cli"
+          },
+          "destination": {
+            "node": "calm-specification"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "cli-uses-shared",
+      "description": "Delegates validation, generation, loaders, and templating to shared code.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-cli"
+          },
+          "destination": {
+            "node": "calm-shared"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "shared-uses-models",
+      "description": "Uses CALM model and type definitions.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-shared"
+          },
+          "destination": {
+            "node": "calm-models"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "shared-uses-widgets",
+      "description": "Uses widgets for docify and template generation.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-shared"
+          },
+          "destination": {
+            "node": "calm-widgets"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "calm-server-uses-shared",
+      "description": "Validates CALM documents through shared validation logic.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-server"
+          },
+          "destination": {
+            "node": "calm-shared"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "developer-validates-with-server",
+      "description": "Posts CALM architecture JSON to the standalone validation endpoint.",
+      "protocol": "HTTP",
+      "relationship-type": {
+        "interacts": {
+          "actor": "developer",
+          "nodes": [
+            "calm-server"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "hub-ui-calls-hub",
+      "description": "Calls Hub REST APIs under the /calm path.",
+      "protocol": "HTTPS",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-hub-ui"
+          },
+          "destination": {
+            "node": "calm-hub"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "hub-ui-auth-keycloak",
+      "description": "Uses OIDC authorization code flow in secure mode.",
+      "protocol": "HTTPS",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-hub-ui"
+          },
+          "destination": {
+            "node": "keycloak"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "hub-auth-keycloak",
+      "description": "Validates JWTs from Keycloak in the secure profile.",
+      "protocol": "HTTPS",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-hub"
+          },
+          "destination": {
+            "node": "keycloak"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "hub-persists-mongo",
+      "description": "Uses MongoDB as the default persistent store.",
+      "protocol": "TCP",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-hub"
+          },
+          "destination": {
+            "node": "mongodb"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "hub-persists-nitrite",
+      "description": "Uses embedded NitriteDB for standalone storage mode.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-hub"
+          },
+          "destination": {
+            "node": "nitritedb"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "hub-exposes-mcp",
+      "description": "Embeds MCP tools backed by the same CALM Hub stores.",
+      "relationship-type": {
+        "composed-of": {
+          "container": "calm-hub",
+          "nodes": [
+            "calm-hub-mcp"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "developer-calls-hub-mcp",
+      "description": "MCP-capable clients call Hub tools at the MCP endpoint.",
+      "protocol": "HTTP",
+      "relationship-type": {
+        "interacts": {
+          "actor": "developer",
+          "nodes": [
+            "calm-hub-mcp"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "hub-deployed-in-platform",
+      "description": "Deploys Hub and MongoDB through Docker Compose and Kubernetes manifests.",
+      "relationship-type": {
+        "deployed-in": {
+          "container": "deployment-platform",
+          "nodes": [
+            "calm-hub",
+            "mongodb"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "vscode-uses-shared",
+      "description": "Uses shared and internal tooling for docify, validation, and rendering helpers.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-vscode-plugin"
+          },
+          "destination": {
+            "node": "calm-shared"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "cli-installs-ai-prompts",
+      "description": "Copies assistant configurations and prompt files for supported providers.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-cli"
+          },
+          "destination": {
+            "node": "calm-ai"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "docs-published-to-aws",
+      "description": "GitHub workflow builds Docusaurus and syncs static assets to S3, then invalidates CloudFront.",
+      "protocol": "HTTPS",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "github"
+          },
+          "destination": {
+            "node": "aws-static-hosting"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "hub-image-published",
+      "description": "GitHub workflow builds and pushes the CALM Hub container image.",
+      "protocol": "HTTPS",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "github"
+          },
+          "destination": {
+            "node": "docker-hub"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "calmguard-fetches-github",
+      "description": "Fetches CALM files and creates remediation pull requests through GitHub APIs.",
+      "protocol": "HTTPS",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-guard"
+          },
+          "destination": {
+            "node": "github"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "calmguard-streams-analysis",
+      "description": "Streams live agent events to the dashboard using server-sent events.",
+      "protocol": "HTTP",
+      "relationship-type": {
+        "interacts": {
+          "actor": "developer",
+          "nodes": [
+            "calm-guard"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "calmguard-invokes-agents",
+      "description": "Orchestrates deterministic and LLM-backed compliance agents.",
+      "relationship-type": {
+        "composed-of": {
+          "container": "calm-guard",
+          "nodes": [
+            "calmguard-agents"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "calmguard-agents-call-llms",
+      "description": "Uses configured provider APIs for structured compliance analysis.",
+      "protocol": "HTTPS",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calmguard-agents"
+          },
+          "destination": {
+            "node": "llm-providers"
+          }
+        }
+      }
+    },
+    {
+      "unique-id": "developer-uses-calmstudio-mcp",
+      "description": "AI clients can drive CalmStudio architecture operations through MCP transports.",
+      "protocol": "HTTP",
+      "relationship-type": {
+        "interacts": {
+          "actor": "developer",
+          "nodes": [
+            "calmstudio-mcp"
+          ]
+        }
+      }
+    },
+    {
+      "unique-id": "calmstudio-edits-local-docs",
+      "description": "Imports and exports CALM JSON, SVG, PNG, and related artifacts.",
+      "relationship-type": {
+        "connects": {
+          "source": {
+            "node": "calm-studio"
+          },
+          "destination": {
+            "node": "local-calm-documents"
+          }
+        }
+      }
+    }
+  ]
+}
