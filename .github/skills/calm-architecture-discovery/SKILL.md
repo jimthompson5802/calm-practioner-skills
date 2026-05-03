@@ -6,7 +6,10 @@ user-invocable: true
 
 # CALM Node & Relationship Discovery Skill
 
-Scan the codebase to identify potential CALM nodes and relationships for a FINOS CALM architecture model (schema version 1.2).
+Look for the parameter `root_dir` in the incoming request, prompt or call context.
+If `root_dir` is missing or empty, ask a single concise clarifying question requesting the value for `root_dir`.
+
+Scan all subdirectories of `root_dir` to identify potential CALM nodes and relationships for a FINOS CALM architecture model (schema version 1.2).
 
 ## What to look for
 
@@ -72,9 +75,11 @@ Scan the codebase to identify potential CALM nodes and relationships for a FINOS
 
 ## Output format
 
-First, display a warning banner:
+Once the node and relationships have been identified, display warning banner:
 
 ```⚠️ This is an initial discovery of potential CALM nodes and relationships based on static analysis of the codebase by an LLM. It may contain inaccuracies or omissions. Please review and validate each item before using it in your CALM architecture model.```
+
+Show this message "Scanned the following top-level subdirectories for the CALM nodes and relationships:" followed by a bullet list of the top-level subdirectories that were scanned.
 
 Produce two tables:
 
