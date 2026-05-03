@@ -43,6 +43,8 @@ When the `calm-architecture-discovery` skill is used, the CALM AI Assistant disp
 3. Run the `calm-architecture-discovery` skill to discover the architecture implied by the code.
 4. Save the resulting CALM JSON and key-observations files into `calm-architectures/` for each assistant variant you evaluate.
 
+Here is an example [CALM AI Assistant Chat log](copilot-architecture-discovery-chat-log.md) using `/calm-architecture-discovery`
+
 
 ## Architecture comparison
 
