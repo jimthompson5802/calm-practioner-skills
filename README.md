@@ -1,10 +1,12 @@
 # CALM Practitioner Skills — Discovery Skill Proof of Concept
 
-This repository is focused on demonstrating a proof-of-concept for the `calm-architecture-discovery` skill and capturing example CALM outputs from different AI assistants.
+This repository is focused on demonstrating a proof-of-concept for the [`calm-architecture-discovery`](./.github/skills/calm-architecture-discovery/SKILL.md) skill and capturing example CALM outputs from different AI assistants.
 
-Although the discovered architectures contain meaningful semantic differences, each is still useful as a starting point for an architect refining the model. The strongest outputs validate cleanly and capture more operational context, making them the best foundations for deeper review.
+The `calm-architecture-discovery` skill generates a CALM architecture by scanning application source code. This provides a means to quickly produce a CALM architecture model without manual effort — though the result may contain inaccuracies or omissions. The intent is to give an architect a well-structured starting point that they can review and refine to make it accurate.
 
-Important note
+Although the discovered architectures from the different AI Assistants contain meaningful semantic differences, each is still useful as a starting point for an architect refining the model. Each captures the same core architecture landscape around CALM Hub, the Hub UI, CLI-based authoring and validation, persistence, authentication, and AI-assisted workflows.
+
+**Important note**:
 
 When the `calm-architecture-discovery` skill is used, the CALM AI Assistant displays the following warning before showing discovered architecture results:
 

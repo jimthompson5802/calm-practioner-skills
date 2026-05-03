@@ -1,6 +1,6 @@
 ---
 name: calm-architecture-discovery
-description: Use when asked to scan a codebase to identify CALM nodes and relationships for a FINOS CALM architecture model.
+description: Use when asked to scan a codebase to generate a CALM architecture from application source code. Identifies CALM nodes and relationships for a FINOS CALM architecture model. The generated architecture is intended as a quick starting point that may contain inaccuracies or omissions, which an architect can then review and refine to make it accurate.
 user-invocable: true
 ---
 
