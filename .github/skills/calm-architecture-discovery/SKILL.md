@@ -78,7 +78,7 @@ Present the discovered nodes and relationships as described in the `Output forma
 - A node should be identified as a distinct architectural component only if there is evidence of it being a separate deployable unit, runtime process, command line, or external system.  For example, two services defined in the same codebase but running as separate processes would be two nodes, while two classes in the same service would not.
 - DO NOT define `composed-of` and `deployed-in` relationships.  Focus on `connects` and `interacts` relationships that indicate actual communication or interaction patterns between nodes.
 - When forming the unique-id for relationships, use format `source-node-id → destination-node-id` to clearly indicate direction of the relationship.
-- DO NOT write the nodes and relationshiops to a CALM architecture model to a file.
+- DO NOT write the nodes and relationships to a CALM architecture model to a file.
 - Present information about the nodes and relationships as stated in the `Output Format` section.
 
 
