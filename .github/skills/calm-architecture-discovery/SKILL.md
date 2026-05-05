@@ -1,6 +1,6 @@
 ---
 name: calm-architecture-discovery
-description: Use when asked to scan a codebase to generate a CALM architecture from application source code. Identifies CALM nodes and relationships for a FINOS CALM architecture model. The generated architecture is intended as a quick starting point that may contain inaccuracies or omissions, which an architect can then review and refine to make it accurate.
+description: Use when asked to scan a codebase to generate a CALM architecture from application source code. Identifies CALM nodes and relationships for a FINOS CALM architecture model, which serves as a starting point for further refinement and validation by architects and engineers.
 user-invocable: true
 ---
 
@@ -10,6 +10,8 @@ Look for the parameter `root_dir` in the incoming request, prompt or call contex
 If `root_dir` is missing or empty, ask a single concise clarifying question requesting the value for `root_dir`.
 
 Scan all subdirectories of `root_dir` to identify potential CALM nodes and relationships for a FINOS CALM architecture model (schema version 1.2).
+
+Present the discovered nodes and relationships as described in the `Output format` section below, along with any key observations about the architecture.
 
 ## What to look for
 
@@ -72,6 +74,15 @@ Scan all subdirectories of `root_dir` to identify potential CALM nodes and relat
 - **interacts** — actor-to-system interactions (user uses UI, external system calls API)
 - **deployed-in** — containment (service runs in container, container runs in cluster)
 - **composed-of** — logical composition (system made up of services)
+
+## IMPORTANT NOTES
+- When identifying nodes and relationship, make sure to the node or relationship is actively used in executable code and not inferred by a reference in a comment or existence of an unused constant or variable.
+- A node should be identified as a distinct architectural component only if there is evidence of it being a separate deployable unit, runtime process, command line, or external system.  For example, two services defined in the same codebase but running as separate processes would be two nodes, while two classes in the same service would not.
+- DO NOT define `composed-of` and `deployed-in` relationships.  Focus on `connects` and `interacts` relationships that indicate actual communication or interaction patterns between nodes.
+- When forming the unique-id for relationships, use format `source-node-id → destination-node-id` to clearly indicate direction of the relationship.
+- DO NOT write the nodes and relationshiops to a CALM architecture model to a file.
+- Present information about the nodes and relationships as stated in the `Output Format` section.
+
 
 ## Output format
 
