@@ -1,0 +1,61 @@
+---
+config:
+  theme: base
+  themeVariables:
+    fontFamily: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', sans-serif
+    darkMode: false
+    fontSize: 14px
+    edgeLabelBackground: '#d5d7e1'
+    lineColor: '#000000'
+---
+%%{init: {"layout": "elk", "flowchart": {"htmlLabels": false}}}%%
+flowchart TB
+classDef boundary fill:#e1e4f0,stroke:#204485,stroke-dasharray: 5 4,stroke-width:1px,color:#000000;
+classDef node fill:#eef1ff,stroke:#007dff,stroke-width:1px,color:#000000;
+classDef iface fill:#f0f0f0,stroke:#b6b6b6,stroke-width:1px,font-size:10px,color:#000000;
+classDef highlight fill:#fdf7ec,stroke:#f0c060,stroke-width:1px,color:#000000;
+
+        subgraph k8s-cluster["Kubernetes Cluster"]
+        direction TB
+            calm-hub["CALM Hub"]:::node
+            mongodb["MongoDB"]:::node
+        end
+        class k8s-cluster boundary
+
+    ai-assistant["AI Assistant"]:::node
+    aws-s3["AWS S3"]:::node
+    calm-cli["CALM CLI"]:::node
+    calm-docs["CALM Documentation Site"]:::node
+    calm-guard["CALM Guard"]:::node
+    calm-hub-ui["CALM Hub UI"]:::node
+    calm-schemas["CALM JSON Schemas"]:::node
+    calm-studio["CALM Studio"]:::node
+    calm-server["CALM Validation Server"]:::node
+    vscode-extension["CALM VSCode Extension"]:::node
+    developer["Developer / Architect"]:::node
+    docker-hub["Docker Hub"]:::node
+    github["GitHub / GitHub Actions"]:::node
+    keycloak["Keycloak (OIDC Provider)"]:::node
+    nitritedb["NitriteDB"]:::node
+
+    developer -->|Reads CALM project documentation, guides, and schema references published to the documentation site| calm-docs
+    developer -->|Runs policy enforcement or governance checks against CALM architecture documents| calm-guard
+    developer -->|Browses, creates, and visualises CALM architectures through the web interface| calm-hub-ui
+    developer -->|Runs generate, validate, docify, and template commands from the terminal| calm-cli
+    developer -->|Authors and explores CALM models using the local desktop application| calm-studio
+    developer -->|Edits and validates CALM files within the IDE with real-time feedback| vscode-extension
+    ai-assistant -->|Invokes CALM Hub MCP tools #40;list/create architectures, decorators, namespaces, search#41; via Streamable HTTP at /mcp| calm-hub
+    calm-hub-ui -->|Sends Axios HTTP requests to /calm/namespaces/* REST endpoints for architecture, pattern, flow, control, decorator, and search operations| calm-hub
+    calm-cli -->|Pulls remote schemas and publishes architectures to the CALM Hub REST API| calm-hub
+    calm-cli -->|Sends architecture JSON to POST /calm/validate for schema and Spectral validation| calm-server
+    calm-studio -->|Reads and writes CALM documents via the Hub REST API from the desktop application| calm-hub
+    vscode-extension -->|Calls the validation server to provide inline schema validation feedback inside the editor| calm-server
+    calm-hub -->|Persists and retrieves all CALM resources using the MongoDB Java driver over the wire protocol| mongodb
+    calm-hub -->|Reads and writes CALM resources via the embedded Nitrite driver to the local filesystem when running in standalone mode| nitritedb
+    calm-hub-ui -->|Performs OAuth2 authorisation code flow and token refresh against the OIDC provider using oidc-client-ts| keycloak
+    calm-hub -->|Validates JWT bearer tokens by introspecting against the Keycloak JWKS endpoint via the Quarkus OIDC extension in the secure profile| keycloak
+    calm-server -->|Loads bundled CALM JSON Schema files from dist/calm/ at startup to perform architecture validation| calm-schemas
+    calm-cli -->|Reads schema files from the local schema directory or fetches them remotely for generate and validate operations| calm-schemas
+    github -->|Builds multi-arch CALM Hub container images and pushes finos/calm-hub to Docker Hub on release via the docker-publish-calm-hub.yml workflow| docker-hub
+    github -->|Uploads the built Docusaurus documentation site and video assets to S3 via s3-docs-sync.yml and s3-video-sync.yml workflows| aws-s3
+
