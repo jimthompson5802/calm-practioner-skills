@@ -25,6 +25,10 @@ Present the discovered nodes and relationships as described in the `Output forma
 - **ecosystem** — external third-party platforms (cloud providers, SaaS, identity providers)
 - **data-asset** — files, datasets, message queues, event streams
 
+### Relationships — for each pair of nodes, identify:
+- **connects** — direct point-to-point calls (HTTP, HTTPS, JDBC, gRPC, WebSocket, AMQP, TCP, etc.)
+- **interacts** — actor-to-system interactions (user uses UI, external system calls API)
+
 ### Evidence to scan
 
 #### Package manifests & build files (pick what applies)
@@ -68,12 +72,6 @@ Present the discovered nodes and relationships as described in the `Output forma
 - OpenAPI / Swagger specs: `openapi.yaml`, `swagger.json`, `*.oas.yaml`
 - AsyncAPI specs: `asyncapi.yaml`
 - Architecture diagrams (even if informal): `*.drawio`, `*.puml`, `*.mermaid`
-
-### Relationships — for each pair of nodes, identify:
-- **connects** — direct point-to-point calls (HTTP, HTTPS, JDBC, gRPC, WebSocket, AMQP, TCP, etc.)
-- **interacts** — actor-to-system interactions (user uses UI, external system calls API)
-- **deployed-in** — containment (service runs in container, container runs in cluster)
-- **composed-of** — logical composition (system made up of services)
 
 ## IMPORTANT NOTES
 - When identifying nodes and relationship, make sure to the node or relationship is actively used in executable code and not inferred by a reference in a comment or existence of an unused constant or variable.
