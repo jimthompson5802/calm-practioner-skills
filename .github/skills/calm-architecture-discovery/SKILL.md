@@ -77,6 +77,7 @@ Present the discovered nodes and relationships as described in the `Output forma
 - When identifying nodes and relationship, make sure to the node or relationship is actively used in executable code and not inferred by a reference in a comment or existence of an unused constant or variable.
 - A node should be identified as a distinct architectural component only if there is evidence of it being a separate deployable unit, runtime process, command line, or external system.  For example, two services defined in the same codebase but running as separate processes would be two nodes, while two classes in the same service would not.
 - DO NOT define `composed-of` and `deployed-in` relationships.  Focus on `connects` and `interacts` relationships that indicate actual communication or interaction patterns between nodes.
+- For relationships, DO NOT capture protocols, this has been deprecated.
 - When forming the unique-id for relationships, use format `source-node-id → destination-node-id` to clearly indicate direction of the relationship.
 - DO NOT write the nodes and relationships to a CALM architecture model to a file.
 - Present information about the nodes and relationships as stated in the `Output Format` section.
@@ -94,7 +95,7 @@ Produce two tables:
 
 **Nodes table** with columns: `unique-id` | `node-type` | `name` | `description`
 
-**Relationships table** with columns: `unique-id` | `relationship-type` | `protocol (if connects)` | `source → destination` | `description`
+**Relationships table** with columns: `unique-id` | `relationship-type` | `source → destination` | `description`
 
 Then list key observations:
 - Deployment boundaries
