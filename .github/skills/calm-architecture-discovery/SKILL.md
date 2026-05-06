@@ -25,6 +25,8 @@ Present the discovered nodes and relationships as described in the `Output forma
 - **ecosystem** — external third-party platforms (cloud providers, SaaS, identity providers)
 - **data-asset** — files, datasets, message queues, event streams
 
+Except for the actor node type, collect technical information about the endpoints the node exposes, such as port number, protocol, method and path.
+
 ### Relationships — for each pair of nodes, identify:
 - **connects** — direct point-to-point calls (HTTP, HTTPS, JDBC, gRPC, WebSocket, AMQP, TCP, etc.)
 - **interacts** — actor-to-system interactions (user uses UI, external system calls API)
@@ -90,6 +92,8 @@ Once the node and relationships have been identified, display warning banner:
 ```⚠️ This is an initial discovery of potential CALM nodes and relationships based on static analysis of the codebase by an LLM. It may contain inaccuracies or omissions. Please review and validate each item before using it in your CALM architecture model.```
 
 Show this message "Scanned the following top-level subdirectories for the CALM nodes and relationships:" followed by a bullet list of the top-level subdirectories that were scanned.
+
+`description` for nodes and relationships should be concise, ideally one sentence, summarizing the purpose or role of the node or relationship in the architecture.
 
 Produce two tables:
 
