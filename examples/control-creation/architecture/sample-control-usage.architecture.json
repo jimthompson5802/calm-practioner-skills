@@ -14,7 +14,7 @@
                     "description": "Applies the Sample Control to the Order API service",
                     "requirements": [
                         {
-                            "requirement-url": "http://calm.finos.org/controls/sample/schema/sample-control.json",
+                            "requirement-url": "http://example.com/controls/requirements/sample-control-requirement.json",
                             "config": {
                                 "control-id": "CTRL-001",
                                 "name": "Sample Control",
@@ -41,7 +41,7 @@
                     "description": "Applies the Sample Control to the Order Database",
                     "requirements": [
                         {
-                            "requirement-url": "http://calm.finos.org/controls/sample/schema/sample-control.json",
+                            "requirement-url": "http://example.com/controls/requirements/sample-control-requirement.json",
                             "config": {
                                 "control-id": "CTRL-001",
                                 "name": "Sample Control",

@@ -40,12 +40,12 @@ Each node's `controls.sample-control.requirements[0]` references the requirement
 
 ## Why the URL Mapping Is Needed
 
-The generated requirement's `$id` (`http://calm.finos.org/controls/sample/schema/sample-control.json`) and its `allOf` reference to the CALM control-requirement meta-schema (`http://calm.finos.org/controls/2025-03/meta/control-requirement.json`) are not published, publicly-hosted URLs — they're illustrative placeholders. `url-mapping.json` resolves both to local files so validation can run entirely offline:
+The generated requirement's `$id` (`http://calm.finos.org/controls/sample/schema/sample-control.json`) and its `allOf` reference to the CALM control-requirement meta-schema (`http://calm.finos.org/release/1.2/meta/control-requirement.json`) are not published, publicly-hosted URLs — they're illustrative placeholders. `url-mapping.json` resolves both to local files so validation can run entirely offline:
 
 ```json
 {
     "http://calm.finos.org/controls/sample/schema/sample-control.json": "../control-creation/generated-requirements/sample-control-requirement.json",
-    "http://calm.finos.org/controls/2025-03/meta/control-requirement.json": "control-requirement-meta.json"
+    "http://calm.finos.org/release/1.2/meta/control-requirement.json": "control-requirement-meta.json"
 }
 ```
 
