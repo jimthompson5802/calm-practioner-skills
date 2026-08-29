@@ -173,7 +173,7 @@ The skill reads the markdown spec, parses each property definition, and generate
 - Maps enum properties to `$ref`-linked definitions under `defs`
 - Maps string and boolean properties directly
 
-## Output: `generated-requirements/sample-control-requirement.json`
+## Output: [`generated-requirements/sample-control-requirement.json`](./generated-requirements/sample-control-requirement.json)
 
 The generated file, saved using a kebab-case name derived from the control's `Name` field (`Sample Control` → `sample-control-requirement.json`).
 
