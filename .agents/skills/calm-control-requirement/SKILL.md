@@ -1,48 +1,83 @@
 ---
 name: calm-control-requirement
-description: Convert CALM control requirements from markdown to JSON. Use when you have a markdown file with control metadata (control-id, name, description, section) and properties (enums, numeric with constraints, strings) that need to be converted to a CALM control requirement JSON file.
+description: Convert CALM control requirements from markdown to JSON. Use when you have a markdown file with control metadata (control-id, name, description) and properties (enums, numeric with constraints, strings, booleans) that need to be converted to a CALM control requirement JSON file.
 user-invocable: true
 ---
 
 # CALM Control Requirement Converter
 
-Convert markdown-based control specifications into valid CALM control requirement JSON format.
+Convert markdown-based control specifications into valid CALM control requirement JSON format, or show the authoring template when the user asks for it.
 
-Look for the parameters `spec_file` and `output_dir` in the incoming request, prompt, or call context.
+First, determine which invocation mode applies from the incoming request, prompt, or call context:
 
-If either `spec_file` or `output_dir` is missing or empty, ask a single concise clarifying question requesting the missing value or values.
+- If the user clearly asks to show, display, view, or get the template in natural language, enter Template Mode.
+- Otherwise, look for the parameters `spec_file` and `output_dir` and enter Conversion Mode when both are present.
+- If neither mode is satisfied, ask a single concise clarifying question:
+  `Provide either a request to show the template, or both spec_file and output_dir.`
 
 ## Overview
 
 This skill helps you convert control requirement definitions written in markdown into structured CALM JSON. It handles:
 
-- Control metadata (ID, name, description, section)
+- Control metadata (ID, name, description)
 - Property definitions with type validation
 - Numeric constraints (min, max, integer/float)
 - Enum properties with allowed values
 - String properties with optional constraints
+- Boolean properties
 - Saving the generated JSON to the requested output location using a kebab-case file name derived from the control name
-
-**Getting Started**: Use the [template.md](./template.md) as a starting point for your control definition, save the completed markdown file, then provide its path as `spec_file` together with an `output_dir`.
 
 ## Workflow
 
+### Invocation Modes
+
+This skill supports two mutually exclusive entry paths:
+
+1. **Template Mode**
+   Trigger this mode when the user clearly asks to see the template in natural language, such as:
+   - `show template`
+   - `show me the template`
+   - `display the markdown template`
+   - `can you show the control requirement template?`
+
+   In Template Mode:
+   1. Read `assets/template.md`
+   2. Render the file contents verbatim in the response
+   3. Tell the user to save the template as a markdown file, fill it in, and reinvoke the skill with `spec_file` and `output_dir`
+   4. Stop without attempting conversion
+
+   If the user both asks for the template and provides `spec_file` and `output_dir`, Template Mode wins.
+
+2. **Conversion Mode**
+   Trigger this mode when both `spec_file` and `output_dir` are present.
+
+   In Conversion Mode:
+   - Read the markdown control definition from `spec_file`
+   - Convert it into CALM control requirement JSON
+   - Save the generated JSON into `output_dir`
+
+Do not ask for `spec_file` or `output_dir` when Template Mode applies.
+
+### Step 0: Enable the CALM Skill
+
+Ensure the CALM skill is enabled in your agent. This skill depends on the CALM control requirement definitions.
+
+
 ### Step 1: Understand the Input Format
 
-Read the markdown control definition from `spec_file`.
+In Conversion Mode, read the markdown control definition from `spec_file`.
 
 The markdown file should contain:
 
 ```markdown
 # Control ID: [control-id]
 ## Name: [control-name]
-## Section: [section-name]
 ## Description
 [control description]
 
 ## Properties
 ### [Property Name]
-- Type: [enum|numeric|string]
+- Type: [enum|numeric|string|boolean]
 - Description: [description]
 - [Type-specific fields]:
   - For numeric: Min: N, Max: N, Type: [integer|float]
@@ -56,11 +91,12 @@ Before converting, ensure you have:
 - [ ] Output directory for generated JSON (`output_dir`)
 - [ ] Control ID (e.g., `CTL-001`)
 - [ ] Control name and human-readable title
-- [ ] Section/category this control belongs to
 - [ ] Description of what the control enforces
 - [ ] List of properties with their types and constraints
 
-If the file path, output directory, or any required control fields are missing, ask the user to provide them.
+If `spec_file` or `output_dir` is missing, ask only for the missing value unless Template Mode applies.
+
+If any required control fields are missing from the markdown content itself, ask the user to provide or fix them in the spec file.
 
 ### Step 3: Parse Properties
 
@@ -80,27 +116,60 @@ For each property in the control:
 - Add `description`
 - Optionally add `pattern` or length constraints if mentioned
 
+**Boolean Properties:**
+- Add `description`
+- Generate `"type": "boolean"`
+
 ### Step 4: Generate JSON Structure
 
-Create a JSON object with this structure:
+Create a JSON Schema document with this structure:
 
 ```json
 {
-  "control-id": "string",
-  "control-name": "string",
-  "section": "string",
-  "description": "string",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://calm.finos.org/controls/[domain]/schema/[control-name].json",
+  "title": "string",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "http://calm.finos.org/controls/2025-03/meta/control-requirement.json"
+    }
+  ],
   "properties": {
-    "property-name": {
-      "type": "string|numeric|enum",
+    "control-id": {
+      "const": "string"
+    },
+    "name": {
+      "const": "string"
+    },
+    "description": {
+      "const": "string"
+    },
+    "string-property": {
+      "type": "string",
       "description": "string",
-      // Type-specific fields:
-      // For numeric:
-      "value-type": "integer|float",
-      "minimum": number (optional),
-      "maximum": number (optional),
-      // For enum:
-      "values": ["string"]
+      "pattern": "regex (optional)",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "numeric-property": {
+      "type": "integer",
+      "description": "string",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "enum-property": {
+      "$ref": "#/defs/property-name"
+    },
+    "boolean-property": {
+      "type": "boolean",
+      "description": "string"
+    }
+  },
+  "required": ["control-id", "name", "description", "string-property"],
+  "defs": {
+    "property-name": {
+      "enum": ["value1", "value2"]
     }
   }
 }
@@ -109,10 +178,13 @@ Create a JSON object with this structure:
 ### Step 5: Validate
 
 Verify the generated JSON:
-- [ ] All required fields present (control-id, control-name, section, description, properties)
-- [ ] Each property has a type, description
+- [ ] All required schema fields present (`$schema`, `$id`, `title`, `type`, `allOf`, `properties`, `required`)
+- [ ] Control metadata is represented as `const` values for `control-id`, `name`, and `description`
+- [ ] Each generated property is expressed as JSON Schema
 - [ ] Numeric properties have valid min/max if specified (min ≤ max)
 - [ ] Enum properties have at least one value
+- [ ] Enum properties are defined in `defs` and referenced from `properties` when appropriate
+- [ ] Boolean properties use `"type": "boolean"`
 - [ ] JSON is syntactically valid
 - [ ] IDs follow expected naming convention
 - [ ] Output file name is derived from the control name and converted to kebab-case
@@ -140,11 +212,21 @@ Before considering the conversion complete:
 
 ## Example
 
+**Template Mode Requests:**
+```text
+show template
+show me the template
+can you display the control requirement template?
+```
+
+**Template Mode Response:**
+- Display the full contents of `assets/template.md`
+- Instruct the user to save it as a markdown file, fill it in, and reinvoke the skill with `spec_file` and `output_dir`
+
 **Input Markdown:**
 ```markdown
 # Control ID: CTL-AUTH-001
 ## Name: Authentication Strength
-## Section: Access Control
 ## Description
 Enforces authentication mechanism requirements for system access.
 
@@ -167,34 +249,67 @@ Enforces authentication mechanism requirements for system access.
 - Type: integer
 - Min: 15
 - Max: 480
+
+### mfa-required
+- Type: boolean
+- Description: Whether multi-factor authentication is mandatory
 ```
 
 **Output JSON:**
 ```json
 {
-  "control-id": "CTL-AUTH-001",
-  "control-name": "Authentication Strength",
-  "section": "Access Control",
-  "description": "Enforces authentication mechanism requirements for system access.",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://calm.finos.org/controls/security/schema/authentication-strength.json",
+  "title": "Authentication Strength",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "http://calm.finos.org/controls/2025-03/meta/control-requirement.json"
+    }
+  ],
   "properties": {
+    "control-id": {
+      "const": "CTL-AUTH-001"
+    },
+    "name": {
+      "const": "Authentication Strength"
+    },
+    "description": {
+      "const": "Enforces authentication mechanism requirements for system access."
+    },
     "min-password-length": {
-      "type": "numeric",
+      "type": "integer",
       "description": "Minimum password length requirement",
-      "value-type": "integer",
       "minimum": 8,
       "maximum": 128
     },
     "allowed-auth-methods": {
-      "type": "enum",
       "description": "Approved authentication methods",
-      "values": ["mfa", "oauth2", "saml", "ldap"]
+      "$ref": "#/defs/allowed-auth-methods"
     },
     "session-timeout-minutes": {
-      "type": "numeric",
+      "type": "integer",
       "description": "Maximum session duration in minutes",
-      "value-type": "integer",
       "minimum": 15,
       "maximum": 480
+    },
+    "mfa-required": {
+      "type": "boolean",
+      "description": "Whether multi-factor authentication is mandatory"
+    }
+  },
+  "required": [
+    "control-id",
+    "name",
+    "description",
+    "min-password-length",
+    "allowed-auth-methods",
+    "session-timeout-minutes",
+    "mfa-required"
+  ],
+  "defs": {
+    "allowed-auth-methods": {
+      "enum": ["mfa", "oauth2", "saml", "ldap"]
     }
   }
 }
@@ -208,6 +323,7 @@ Enforces authentication mechanism requirements for system access.
 ## Tips for Success
 
 - **Be explicit about constraints**: Always specify integer vs. float, and include min/max when relevant
+- **Use boolean for true/false controls**: Model on/off or required/not-required settings as `"type": "boolean"`
 - **Use consistent naming**: Property names should be kebab-case (lowercase with hyphens)
 - **Use a descriptive control name**: The generated JSON file name is derived from the control name after converting it to kebab-case
 - **Validate early**: Check constraints are logical before proceeding to JSON generation

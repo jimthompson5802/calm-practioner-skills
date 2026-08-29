@@ -1,0 +1,79 @@
+{
+    "$schema": "https://calm.finos.org/release/1.2/meta/calm.json",
+    "unique-id": "sample-control-usage",
+    "name": "Sample Control Usage Architecture",
+    "description": "A minimal architecture illustrating the Sample Control requirement applied to two nodes with different configurations.",
+    "nodes": [
+        {
+            "unique-id": "order-api",
+            "node-type": "service",
+            "name": "Order API Service",
+            "description": "Handles order submission and processing requests",
+            "controls": {
+                "sample-control": {
+                    "description": "Applies the Sample Control to the Order API service",
+                    "requirements": [
+                        {
+                            "requirement-url": "http://calm.finos.org/controls/sample/schema/sample-control.json",
+                            "config": {
+                                "control-id": "CTRL-001",
+                                "name": "Sample Control",
+                                "description": "This demonstrates creating a CALM Control Requirement",
+                                "time-out": 30,
+                                "latency-range": 5.0,
+                                "protection-level": "high",
+                                "information-level": "sensitive",
+                                "control-string": "order-api-config",
+                                "control-flag": true
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "unique-id": "order-database",
+            "node-type": "database",
+            "name": "Order Database",
+            "description": "Stores order records and transaction history",
+            "controls": {
+                "sample-control": {
+                    "description": "Applies the Sample Control to the Order Database",
+                    "requirements": [
+                        {
+                            "requirement-url": "http://calm.finos.org/controls/sample/schema/sample-control.json",
+                            "config": {
+                                "control-id": "CTRL-001",
+                                "name": "Sample Control",
+                                "description": "This demonstrates creating a CALM Control Requirement",
+                                "time-out": 60,
+                                "latency-range": 12.5,
+                                "protection-level": "medium",
+                                "information-level": "very sensitive",
+                                "control-string": "order-database-config",
+                                "control-flag": false
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "relationships": [
+        {
+            "unique-id": "order-api-to-order-database",
+            "description": "Reads and writes order records in",
+            "relationship-type": {
+                "connects": {
+                    "source": {
+                        "node": "order-api"
+                    },
+                    "destination": {
+                        "node": "order-database"
+                    }
+                }
+            },
+            "protocol": "JDBC"
+        }
+    ]
+}

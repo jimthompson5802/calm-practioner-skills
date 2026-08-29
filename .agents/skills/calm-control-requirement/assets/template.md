@@ -2,8 +2,6 @@
 
 ## Name: [Enter Control Name]
 
-## Section: [Enter Section/Category]
-
 ## Description
 
 [Enter a clear, concise description of what this control enforces. Describe the purpose, scope, and intended outcomes. This will be the main documentation of the control.]
@@ -14,11 +12,11 @@
 
 ### [Property Name 1: camelCase or kebab-case]
 
-- **Type**: numeric
-- **Description**: [What does this property represent? What constraint does it enforce?]
-- **Value Type**: integer
-- **Minimum**: [optional number, e.g., 8]
-- **Maximum**: [optional number, e.g., 128]
+- Type: numeric
+- Description: [What does this property represent? What constraint does it enforce?]
+- Value Type: integer
+- Minimum: [optional number, e.g., 8]
+- Maximum: [optional number, e.g., 128]
 
 **Example**: For a password length requirement, you might have:
 - Type: numeric
@@ -31,9 +29,9 @@
 
 ### [Property Name 2: camelCase or kebab-case]
 
-- **Type**: enum
-- **Description**: [What are the allowed options? Why are these options valid?]
-- **Values**: 
+- Type: enum
+- Description: [What are the allowed options? Why are these options valid?]
+- Values: 
   - value-1
   - value-2
   - value-3
@@ -52,8 +50,8 @@
 
 ### [Property Name 3: camelCase or kebab-case]
 
-- **Type**: string
-- **Description**: [What is the purpose of this string property? Are there any format constraints?]
+- Type: string
+- Description: [What is the purpose of this string property? Are there any format constraints?]
 
 **Example**: For a policy reference, you might have:
 - Type: string
@@ -61,17 +59,28 @@
 
 ---
 
+### [Property Name 4: camelCase or kebab-case]
+
+- Type: boolean
+- Description: [What true/false decision does this property capture?]
+
+**Example**: For an MFA toggle, you might have:
+- Type: boolean
+- Description: Whether multi-factor authentication is mandatory
+
+---
+
 ## Template Instructions
 
 **Before converting to JSON, verify:**
 
-- [ ] Control ID follows your naming convention (e.g., CTL-SECTION-###)
+- [ ] Control ID follows your naming convention (e.g., CTL-001)
 - [ ] Name is concise and descriptive
-- [ ] Section categorizes the control logically
 - [ ] Description is complete and unambiguous
 - [ ] All properties are listed with their types
 - [ ] Numeric properties have value-type, and constraints where needed
 - [ ] Enum properties list all valid values
+- [ ] Boolean properties represent true/false behavior clearly
 - [ ] Property names are consistent (kebab-case recommended)
 - [ ] No typos or formatting issues
 
@@ -81,4 +90,5 @@
 - Be specific about constraints: don't use vague ranges
 - For numeric properties, always specify if it's integer or float
 - For enums, ensure values are meaningful and complete
+- For boolean properties, describe what `true` and `false` mean in plain language
 - Keep descriptions short but clear—one sentence is ideal, two is maximum
