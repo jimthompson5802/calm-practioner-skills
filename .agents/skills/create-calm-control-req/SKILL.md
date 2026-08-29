@@ -1,5 +1,5 @@
 ---
-name: create-control-requirement
+name: create-calm-control-req
 description: Convert CALM control requirements from markdown to JSON. Use when you have a markdown file with control metadata (control-id, name, description) and properties (enums, numeric with constraints, strings, booleans) that need to be converted to a CALM control requirement JSON file.
 user-invocable: true
 ---
