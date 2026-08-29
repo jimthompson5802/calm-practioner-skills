@@ -8,6 +8,10 @@ user-invocable: true
 
 Convert markdown-based control specifications into valid CALM control requirement JSON format.
 
+Look for the parameters `spec_file` and `output_dir` in the incoming request, prompt, or call context.
+
+If either `spec_file` or `output_dir` is missing or empty, ask a single concise clarifying question requesting the missing value or values.
+
 ## Overview
 
 This skill helps you convert control requirement definitions written in markdown into structured CALM JSON. It handles:
@@ -17,12 +21,15 @@ This skill helps you convert control requirement definitions written in markdown
 - Numeric constraints (min, max, integer/float)
 - Enum properties with allowed values
 - String properties with optional constraints
+- Saving the generated JSON to the requested output location using a kebab-case file name derived from the control name
 
-**Getting Started**: Use the [template.md](./template.md) as a starting point for your control definition.
+**Getting Started**: Use the [template.md](./template.md) as a starting point for your control definition, save the completed markdown file, then provide its path as `spec_file` together with an `output_dir`.
 
 ## Workflow
 
 ### Step 1: Understand the Input Format
+
+Read the markdown control definition from `spec_file`.
 
 The markdown file should contain:
 
@@ -45,13 +52,15 @@ The markdown file should contain:
 ### Step 2: Clarify the Control Definition
 
 Before converting, ensure you have:
+- [ ] Markdown specification file path (`spec_file`)
+- [ ] Output directory for generated JSON (`output_dir`)
 - [ ] Control ID (e.g., `CTL-001`)
 - [ ] Control name and human-readable title
 - [ ] Section/category this control belongs to
 - [ ] Description of what the control enforces
 - [ ] List of properties with their types and constraints
 
-If any of these are missing, ask the user to provide them.
+If the file path, output directory, or any required control fields are missing, ask the user to provide them.
 
 ### Step 3: Parse Properties
 
@@ -106,24 +115,28 @@ Verify the generated JSON:
 - [ ] Enum properties have at least one value
 - [ ] JSON is syntactically valid
 - [ ] IDs follow expected naming convention
+- [ ] Output file name is derived from the control name and converted to kebab-case
 
 ### Step 6: Output and Save
 
 1. Display the generated JSON for review
-2. Ask user to confirm before saving
-3. Save to a file with naming pattern: `{control-id}-requirement.json`
-4. Optionally, validate against CALM control schema
+2. Derive the output file name from the markdown `Name` field by converting it to kebab-case
+3. Save the JSON to `output_dir/<kebab-case-control-name>-requirement.json`
+4. Display the full output path that was written
+5. Optionally, validate against CALM control schema
 
 ## Quality Checklist
 
 Before considering the conversion complete:
 
+- [ ] `spec_file` was provided and read successfully
+- [ ] `output_dir` was provided
 - [ ] Control metadata is complete and clear
 - [ ] All properties are accounted for
 - [ ] Numeric constraints are logical (min < max)
 - [ ] Enums have meaningful, distinct values
 - [ ] JSON structure matches the schema
-- [ ] File is saved in the expected location
+- [ ] File is saved in the specified output location with a kebab-case name based on the control name
 
 ## Example
 
@@ -187,10 +200,16 @@ Enforces authentication mechanism requirements for system access.
 }
 ```
 
+**Saved file path:**
+```text
+[output_dir]/authentication-strength-requirement.json
+```
+
 ## Tips for Success
 
 - **Be explicit about constraints**: Always specify integer vs. float, and include min/max when relevant
 - **Use consistent naming**: Property names should be kebab-case (lowercase with hyphens)
+- **Use a descriptive control name**: The generated JSON file name is derived from the control name after converting it to kebab-case
 - **Validate early**: Check constraints are logical before proceeding to JSON generation
 - **Preserve intent**: The JSON should capture the original control's meaning and enforcement logic
 - **Document unclear values**: If a user's markdown is ambiguous, ask for clarification rather than guessing
