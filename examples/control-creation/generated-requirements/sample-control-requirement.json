@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://calm.finos.org/controls/security/schema/sample-control.json",
+  "title": "Sample Control",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "https://calm.finos.org/release/1.2/meta/control-requirement.json"
+    }
+  ],
+  "properties": {
+    "control-id": {
+      "const": "CTRL-001"
+    },
+    "name": {
+      "const": "Sample Control"
+    },
+    "description": {
+      "const": "This demonstrates creating a CALM Control Requirement"
+    },
+    "time-out": {
+      "type": "integer",
+      "description": "Time out value for the session",
+      "minimum": 1
+    },
+    "latency-range": {
+      "type": "number",
+      "description": "latency requirements for transaction",
+      "minimum": 0.5,
+      "maximum": 20.0
+    },
+    "protection-level": {
+      "description": "specifies defined protection levels",
+      "$ref": "#/defs/protection-level"
+    },
+    "information-level": {
+      "description": "level of information confidentiality",
+      "$ref": "#/defs/information-level"
+    },
+    "control-string": {
+      "type": "string",
+      "description": "Arbitrary string the user can specify"
+    },
+    "control-flag": {
+      "type": "boolean",
+      "description": "indicates where the control flag is on or off"
+    }
+  },
+  "required": [
+    "control-id",
+    "name",
+    "description",
+    "time-out",
+    "latency-range",
+    "protection-level",
+    "information-level",
+    "control-string",
+    "control-flag"
+  ],
+  "defs": {
+    "protection-level": {
+      "enum": ["low", "medium", "high"]
+    },
+    "information-level": {
+      "enum": ["not sensitive", "sensitive", "very sensitive"]
+    }
+  }
+}

@@ -10,13 +10,15 @@ The repository is expected to expand over time. Architecture discovery is one ex
 
 - Assistant-specific skill and prompt assets for CALM workflows across multiple environments
 - An architecture-discovery proof of concept with recorded outputs in [examples/architecture-discovery](examples/architecture-discovery/README.md)
+- A control-requirement creation example in [examples/control-creation](examples/control-creation/README.md)
 - Reusable templates for CALM-related architecture documents in [templates](templates/)
 
 
 ## Repository structure
 
-- `.agents/`, `.claude/`, `.github/` - assistant-specific agent and skill definitions
+- `.agents/`, `.claude/`, `.github/`, `.kiro/` - assistant-specific agent, prompt, skill, and steering definitions across supported environments
 - `examples/` - worked examples and captured outputs
+- `sandbox/` - lightweight scratch material and command examples
 - `templates/` - reusable supporting documents
 
 ## Notes
