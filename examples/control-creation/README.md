@@ -1,6 +1,6 @@
 # Control Creation Example
 
-This directory demonstrates the `calm-control-requirement` agent skill, which converts a markdown-based control specification into a CALM control requirement JSON file (a JSON Schema document).
+This directory demonstrates the `create-control-requirement` agent skill, which converts a markdown-based control specification into a CALM control requirement JSON file (a JSON Schema document).
 
 ## Contents
 
@@ -14,7 +14,7 @@ control-creation/
 
 ## The Skill
 
-`calm-control-requirement` supports two modes:
+`create-control-requirement` supports two modes:
 
 - **Template Mode** — shows the markdown authoring template (`show template`) so you can draft a new spec.
 - **Conversion Mode** — converts a filled-in markdown spec into CALM control requirement JSON, given a `spec_file` and an `output_dir`.
@@ -37,7 +37,7 @@ A markdown file describing a control named **Sample Control** (`CTRL-001`) with 
 Invoke the skill with the spec file and an output directory:
 
 ```
-/calm-control-requirement examples/control-creation/control-spec/control-spec-001.md examples/control-creation/generated-requirements
+/create-control-requirement examples/control-creation/control-spec/control-spec-001.md examples/control-creation/generated-requirements
 ```
 
 The skill reads the markdown spec, parses each property definition, and generates a JSON Schema document that:
