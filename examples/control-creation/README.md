@@ -6,6 +6,10 @@ This directory demonstrates the `create-calm-control-req` agent skill, which con
 
 ```
 control-creation/
+├── architecture/
+│   ├── README.md                              # Working architecture example and validation notes
+│   ├── sample-control-usage.architecture.json # Example CALM architecture using the generated requirement
+│   └── url-mapping.json                       # Local URL mapping for the example requirement
 ├── control-spec/
 │   └── control-spec-001.md          # Input: markdown control specification
 └── generated-requirements/
@@ -56,13 +60,15 @@ The generated file, saved using a kebab-case name derived from the control's `Na
 
 To use this requirement in an architecture, reference it from a `controls` block and supply a `config` that satisfies its constraints:
 
+For a complete working example, see [`architecture/README.md`](./architecture/README.md).
+
 ```json
 "controls": {
     "sample-control": {
         "description": "Applies the sample control to this component",
         "requirements": [
             {
-                "requirement-url": "http://calm.finos.org/controls/sample/schema/sample-control.json",
+                "requirement-url": "http://example.com/controls/requirements/sample-control-requirement.json",
                 "config": {
                     "control-id": "CTRL-001",
                     "name": "Sample Control",
@@ -85,3 +91,5 @@ Then validate the architecture with `calm validate -a <architecture-file>`, usin
 ```bash
 calm validate -a test-architecture.json -u url-mapping.json
 ```
+
+Typical successful output includes a summary showing zero errors and zero warnings.
