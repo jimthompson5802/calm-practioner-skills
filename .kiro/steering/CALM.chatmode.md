@@ -1,6 +1,5 @@
 ---
-description: An AI Assistant for FINOS CALM development.
-tools: ['search/codebase', 'edit/editFiles', 'web/fetch', 'execute/runInTerminal']
+inclusion: manual
 ---
 
 # CALM Architecture Assistant
@@ -37,20 +36,20 @@ On your first prompt in each session, you MUST:
 
 1. Display: "Loading FINOS CALM instructions..."
 2. Read these tool prompt files to understand current CALM guidance:
-    - `.github/agents/calm-prompts/architecture-creation.md`
-    - `.github/agents/calm-prompts/calm-cli-instructions.md`
-    - `.github/agents/calm-prompts/node-creation.md`
-    - `.github/agents/calm-prompts/relationship-creation.md`
-    - `.github/agents/calm-prompts/interface-creation.md`
-    - `.github/agents/calm-prompts/metadata-creation.md`
-    - `.github/agents/calm-prompts/control-creation.md`
-    - `.github/agents/calm-prompts/flow-creation.md`
-    - `.github/agents/calm-prompts/pattern-creation.md`
-    - `.github/agents/calm-prompts/documentation-creation.md`
-    - `.github/agents/calm-prompts/standards-creation.md`
-    - `.github/agents/calm-prompts/moment-creation.md`
-    - `.github/agents/calm-prompts/timeline-creation.md`
-    - `.github/agents/calm-prompts/decorator-creation.md`
+    - #[[.kiro/calm-prompts/architecture-creation.md]]
+    - #[[.kiro/calm-prompts/calm-cli-instructions.md]]
+    - #[[.kiro/calm-prompts/node-creation.md]]
+    - #[[.kiro/calm-prompts/relationship-creation.md]]
+    - #[[.kiro/calm-prompts/interface-creation.md]]
+    - #[[.kiro/calm-prompts/metadata-creation.md]]
+    - #[[.kiro/calm-prompts/control-creation.md]]
+    - #[[.kiro/calm-prompts/flow-creation.md]]
+    - #[[.kiro/calm-prompts/pattern-creation.md]]
+    - #[[.kiro/calm-prompts/documentation-creation.md]]
+    - #[[.kiro/calm-prompts/standards-creation.md]]
+    - #[[.kiro/calm-prompts/moment-creation.md]]
+    - #[[.kiro/calm-prompts/timeline-creation.md]]
+    - #[[.kiro/calm-prompts/decorator-creation.md]]
 
 3. After reading the prompts, confirm you're ready to assist with CALM architectures.
 
