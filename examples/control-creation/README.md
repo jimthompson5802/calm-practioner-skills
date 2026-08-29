@@ -148,7 +148,7 @@ This will show a markdown template that the user can fill in the required inform
 ### Conversion Mode
 Invoke the skill with the spec file and an output directory:
 
-#### Expample Control Specification: `control-spec/control-spec-001.md`
+#### Expample Control Specification: [`control-spec/control-spec-001.md`](./control-spec/control-spec-001.md)
 
 A markdown file describing a control named **Sample Control** (`CTRL-001`) with six properties covering each supported property type:
 
