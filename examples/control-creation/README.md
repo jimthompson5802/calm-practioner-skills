@@ -22,6 +22,11 @@ control-creation/
 
 - **Template Mode** — shows the markdown authoring template (`show template`) so you can draft a new spec.
 
+```mermaid
+flowchart TB
+    A["/create-calm-control-req<br/>show a template"] --> C["Control Specification<br/>(markdown)"]
+```
+
 - **Conversion Mode** — converts a filled-in markdown spec into CALM control requirement JSON, given a `spec_file` and an `output_dir`.
 
 ```mermaid
