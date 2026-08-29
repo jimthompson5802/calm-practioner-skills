@@ -132,7 +132,7 @@ Create a JSON Schema document with this structure:
   "type": "object",
   "allOf": [
     {
-      "$ref": "http://calm.finos.org/controls/2025-03/meta/control-requirement.json"
+      "$ref": "http://calm.finos.org/release/1.2/meta/control-requirement.json"
     }
   ],
   "properties": {

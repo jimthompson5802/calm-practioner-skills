@@ -1,4 +1,3 @@
 {
-    "http://calm.finos.org/controls/sample/schema/sample-control.json": "../generated-requirements/sample-control-requirement.json",
-    "http://calm.finos.org/controls/2025-03/meta/control-requirement.json": "./control-requirement-meta.json"
+    "http://calm.finos.org/controls/sample/schema/sample-control.json": "../generated-requirements/sample-control-requirement.json"
 }
