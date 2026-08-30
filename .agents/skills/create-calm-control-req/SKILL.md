@@ -1,6 +1,6 @@
 ---
 name: create-calm-control-req
-description: Convert CALM control requirements from markdown to JSON, or show the markdown authoring template when requested. Use when you have a markdown file with control metadata (control-id, name, description) and properties (enums, numeric with constraints, strings, booleans) that need to be converted to a CALM control requirement JSON file, or when you want to display the template first.
+description: Convert CALM control requirements from markdown to JSON, or show the markdown authoring template when requested. Use when there is a markdown file with control metadata (control-id, name, description) and properties (enums, numeric with constraints, strings, booleans) that need to be converted to a CALM control requirement JSON file, or when you want to display the template first.
 user-invocable: true
 ---
 
