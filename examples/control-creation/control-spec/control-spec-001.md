@@ -41,6 +41,15 @@ This demonstrates creating a CALM Control Requirement
   - sensitive
   - very sensitive
 
+### approved-regions
+
+- Type: set
+- Description: approved deployment regions for this workload
+- Values:
+  - us-east-1
+  - us-west-2
+  - eu-west-1
+
 ### control-string
 
 - Type: string
@@ -49,4 +58,3 @@ This demonstrates creating a CALM Control Requirement
 ### control-flag
 - Type: boolean
 - Description: indicates where the control flag is on or off
-

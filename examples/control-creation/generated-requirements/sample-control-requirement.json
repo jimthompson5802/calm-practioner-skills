@@ -37,6 +37,15 @@
       "description": "level of information confidentiality",
       "$ref": "#/defs/information-level"
     },
+    "approved-regions": {
+      "type": "array",
+      "description": "approved deployment regions for this workload",
+      "items": {
+        "$ref": "#/defs/approved-regions-item"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
     "control-string": {
       "type": "string",
       "description": "Arbitrary string the user can specify"
@@ -54,6 +63,7 @@
     "latency-range",
     "protection-level",
     "information-level",
+    "approved-regions",
     "control-string",
     "control-flag"
   ],
@@ -63,6 +73,9 @@
     },
     "information-level": {
       "enum": ["not sensitive", "sensitive", "very sensitive"]
+    },
+    "approved-regions-item": {
+      "enum": ["us-east-1", "us-west-2", "eu-west-1"]
     }
   }
 }

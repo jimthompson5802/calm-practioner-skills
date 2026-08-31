@@ -32,6 +32,7 @@ Both nodes carry the **Sample Control** (`CTRL-001`) — the requirement generat
 | `latency-range` | 5.0 | 12.5 |
 | `protection-level` | high | medium |
 | `information-level` | sensitive | very sensitive |
+| `approved-regions` | `["us-east-1", "us-west-2"]` | `["eu-west-1"]` |
 | `control-string` | `order-api-config` | `order-database-config` |
 | `control-flag` | true | false |
 
@@ -69,8 +70,8 @@ No issues found.
 This confirms:
 - The architecture document itself is structurally valid CALM
 - Each node's `sample-control` control block is well-formed
-- Each node's `config` satisfies every constraint in the Sample Control requirement schema (numeric ranges, enum values, required properties)
+- Each node's `config` satisfies every constraint in the Sample Control requirement schema (numeric ranges, enum values, set membership, required properties)
 
 ## Trying It Yourself
 
-To see validation catch a violation, try editing a `config` value to break a constraint — for example, set `order-api`'s `protection-level` to `"extreme"` (not in the enum) or `time-out` to `0` (below the `minimum: 1`) — then re-run `calm validate`. The command will report an error pinpointing the invalid property.
+To see validation catch a violation, try editing a `config` value to break a constraint — for example, set `order-api`'s `protection-level` to `"extreme"` (not in the enum), set `approved-regions` to `[]` or `["moon-base-1"]`, or set `time-out` to `0` (below the `minimum: 1`) — then re-run `calm validate`. The command will report an error pinpointing the invalid property.

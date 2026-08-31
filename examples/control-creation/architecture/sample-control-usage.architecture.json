@@ -23,6 +23,7 @@
                                 "latency-range": 5.0,
                                 "protection-level": "high",
                                 "information-level": "sensitive",
+                                "approved-regions": ["us-east-1", "us-west-2"],
                                 "control-string": "order-api-config",
                                 "control-flag": true
                             }
@@ -50,6 +51,7 @@
                                 "latency-range": 12.5,
                                 "protection-level": "medium",
                                 "information-level": "very sensitive",
+                                "approved-regions": ["eu-west-1"],
                                 "control-string": "order-database-config",
                                 "control-flag": false
                             }

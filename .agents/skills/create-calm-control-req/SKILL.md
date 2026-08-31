@@ -23,6 +23,7 @@ This skill helps you convert control requirement definitions written in markdown
 - Property definitions with type validation
 - Numeric constraints (min, max, integer/float)
 - Enum properties with allowed values
+- Set properties with one or more allowed values
 - String properties with optional constraints
 - Boolean properties
 - Saving the generated JSON to the requested output location using a kebab-case file name derived from the control name
@@ -77,11 +78,12 @@ The markdown file should contain:
 
 ## Properties
 ### [Property Name]
-- Type: [enum|numeric|string|boolean]
+- Type: [enum|set|numeric|string|boolean]
 - Description: [description]
 - [Type-specific fields]:
   - For numeric: Min: N, Max: N, Type: [integer|float]
   - For enum: Values: [value1, value2, ...]
+  - For set: Values: [value1, value2, ...]
 ```
 
 ### Step 2: Clarify the Control Definition
@@ -111,6 +113,12 @@ For each property in the control:
 **Enum Properties:**
 - Extract all allowed `values`
 - Add `description`
+- Treat the property as a single scalar choice
+
+**Set Properties:**
+- Extract all allowed `values`
+- Add `description`
+- Treat the property as an array of one or more unique values from the allowed set
 
 **String Properties:**
 - Add `description`
@@ -161,6 +169,15 @@ Create a JSON Schema document with this structure:
     "enum-property": {
       "$ref": "#/defs/property-name"
     },
+    "set-property": {
+      "type": "array",
+      "description": "string",
+      "items": {
+        "$ref": "#/defs/set-property-item"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
     "boolean-property": {
       "type": "boolean",
       "description": "string"
@@ -169,6 +186,9 @@ Create a JSON Schema document with this structure:
   "required": ["control-id", "name", "description", "string-property"],
   "defs": {
     "property-name": {
+      "enum": ["value1", "value2"]
+    },
+    "set-property-item": {
       "enum": ["value1", "value2"]
     }
   }
@@ -183,7 +203,9 @@ Verify the generated JSON:
 - [ ] Each generated property is expressed as JSON Schema
 - [ ] Numeric properties have valid min/max if specified (min ≤ max)
 - [ ] Enum properties have at least one value
+- [ ] Set properties have at least one value and generate array schema with `minItems: 1` and `uniqueItems: true`
 - [ ] Enum properties are defined in `defs` and referenced from `properties` when appropriate
+- [ ] Set properties are defined in `defs` and referenced from `properties.items`
 - [ ] Boolean properties use `"type": "boolean"`
 - [ ] JSON is syntactically valid
 - [ ] IDs follow expected naming convention
@@ -207,6 +229,7 @@ Before considering the conversion complete:
 - [ ] All properties are accounted for
 - [ ] Numeric constraints are logical (min < max)
 - [ ] Enums have meaningful, distinct values
+- [ ] Sets have meaningful, distinct values
 - [ ] JSON structure matches the schema
 - [ ] File is saved in the specified output location with a kebab-case name based on the control name
 
@@ -242,6 +265,11 @@ Enforces authentication mechanism requirements for system access.
 - Type: enum
 - Description: Approved authentication methods
 - Values: [mfa, oauth2, saml, ldap]
+
+### approved-regions
+- Type: set
+- Description: Approved deployment regions
+- Values: [us-east-1, us-west-2, eu-west-1]
 
 ### session-timeout-minutes
 - Type: numeric
@@ -287,6 +315,15 @@ Enforces authentication mechanism requirements for system access.
       "description": "Approved authentication methods",
       "$ref": "#/defs/allowed-auth-methods"
     },
+    "approved-regions": {
+      "type": "array",
+      "description": "Approved deployment regions",
+      "items": {
+        "$ref": "#/defs/approved-regions-item"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
     "session-timeout-minutes": {
       "type": "integer",
       "description": "Maximum session duration in minutes",
@@ -304,12 +341,16 @@ Enforces authentication mechanism requirements for system access.
     "description",
     "min-password-length",
     "allowed-auth-methods",
+    "approved-regions",
     "session-timeout-minutes",
     "mfa-required"
   ],
   "defs": {
     "allowed-auth-methods": {
       "enum": ["mfa", "oauth2", "saml", "ldap"]
+    },
+    "approved-regions-item": {
+      "enum": ["us-east-1", "us-west-2", "eu-west-1"]
     }
   }
 }

@@ -50,6 +50,25 @@
 
 ### [Property Name 3: camelCase or kebab-case]
 
+- Type: set
+- Description: [What options can be selected together? Use this when one or more allowed values may be chosen.]
+- Values:
+  - value-1
+  - value-2
+  - value-3
+
+**Example**: For approved deployment regions, you might have:
+- Type: set
+- Description: Approved regions where this workload may run
+- Values:
+  - us-east-1
+  - us-west-2
+  - eu-west-1
+
+---
+
+### [Property Name 4: camelCase or kebab-case]
+
 - Type: string
 - Description: [What is the purpose of this string property? Are there any format constraints?]
 
@@ -59,7 +78,7 @@
 
 ---
 
-### [Property Name 4: camelCase or kebab-case]
+### [Property Name 5: camelCase or kebab-case]
 
 - Type: boolean
 - Description: [What true/false decision does this property capture?]
@@ -80,6 +99,7 @@
 - [ ] All properties are listed with their types
 - [ ] Numeric properties have value-type, and constraints where needed
 - [ ] Enum properties list all valid values
+- [ ] Set properties list all valid values and are intended for multi-select use
 - [ ] Boolean properties represent true/false behavior clearly
 - [ ] Property names are consistent (kebab-case recommended)
 - [ ] No typos or formatting issues
@@ -89,6 +109,7 @@
 - Use kebab-case for all property names (e.g., `min-password-length` not `minPasswordLength`)
 - Be specific about constraints: don't use vague ranges
 - For numeric properties, always specify if it's integer or float
-- For enums, ensure values are meaningful and complete
+- Use `enum` for exactly one allowed value and `set` for one or more allowed values
+- For enums and sets, ensure values are meaningful and complete
 - For boolean properties, describe what `true` and `false` mean in plain language
 - Keep descriptions short but clear—one sentence is ideal, two is maximum
